@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+{% load staticfiles %}
+
+<html>
+<head>
+  <title>HEMS</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+  <link rel="stylesheet" href="{% static "css/main.css" %}"/>
+  <link rel="stylesheet" href="{% static "css/customs.css" %}"/>
+
+  <style>
+    div.container {
+      width: 100%;
+      border: 1px solid gray;
+    }
+    header {
+      padding: 2em;
+      color: #88aae0;
+      background-color: : #dadde5;
+      clear: left;
+    }
+    a.logo {
+      float: left;
+      position: initial;
+      padding: 0.5em;
+    }
+    a.home, a.back {
+      float: right;
+      padding: 0.5em;
+    }
+    article {
+      margin-top: 100px;
+      text-align: center;
+    }
+  </style>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <a href="/hems" class="logo">HEMS</a>
+      <nav id="nav">
+        <a href="/hems/home" class="home">Home</a>
+        <a href="/hems/selectDevice" class="back">Back</a>
+      </nav>
+    </header>
+
+    <article>
+      <h4>HEMS Result:</h4>
+      <p style="vertical-align: bottom;">{{hemsResult}}</p>
+      <h4>Value:</h4>
+      <p style="vertical-align: bottom;">{{hemsValue}}</p>
+    </article>
+  </div>
+</body>
+</html>

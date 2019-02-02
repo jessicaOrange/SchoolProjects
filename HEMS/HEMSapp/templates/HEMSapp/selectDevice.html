@@ -1,0 +1,180 @@
+<!DOCTYPE HTML>
+{% load staticfiles %}
+
+<html>
+<head>
+  <title>HEMS</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+  <link rel="stylesheet" href="{% static "css/main.css" %}"/>
+  <link rel="stylesheet" href="{% static "css/customs.css" %}"/>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <style>
+    #main {
+      width: 800px;
+      height: 300px;
+      display: -webkit-flex; /* Safari */
+      -webkit-align-items: center; /* Safari 7.0+ */
+      display: flex;
+      align-items: center;
+    }
+    #main div {
+       -webkit-flex: 1; /* Safari 6.1+ */
+       flex: 1;
+       padding: 10px;
+    }
+  </style>
+
+  <script type="text/javascript">
+      var hems_data = {
+          "Date and Time": ["OutBack_Day","OutBack_Month","OutBack_Year","OutBack_Hour","OutBack_Minute","OutBack_Second"],
+          'System Type': ['OutBack_System_Voltage','OutBack_Measured_System_Voltage'],
+          "Battery Charging Characteristics": ["GSconfig_Absorb_Volts","GSconfig_Absorb_Time_Hours","GSconfig_Float_Volts","GSconfig_Float_Time_Hours","GSconfig_EQ_Volts","GSconfig_EQ_Time_Hours","GSconfig_ReFloat_Volts"],
+          "AC Configuration": ["GSconfig_AC_Output_Voltage","GSconfig_Stacking_Mode","GSconfig_AC_Input_Select_Priority","GSconfig_Grid_AC_Input_Current_Limit","GSconfig_Gen_AC_Input_Current_Limit"],
+          "n": ["GSconfig_Grid_Lower_Input_Voltage_Limit","GSconfig_Grid_Upper_Input_Voltage_Limit","GSconfig_Grid_Transfer_Delay","GSconfig_Grid_Connect_Delay","GSconfig_Gen_Lower_Input_Voltage_Limit"],
+          "Generator Configuration": ["GSconfig_Grid_Input_Mode","GSconfig_Gen_Upper_Input_Voltage_Limit","GSconfig_Gen_Transfer_Delay","GSconfig_Gen_Connect_Delay","GSconfig_Gen_Input_Mode","OutBack_AGS_Mode","FNconfig_Shunt_A_Enabled"]
+      };
+
+      var hems_category_field = {{ category_field_list | safe }};
+      console.log(hems_category_field);
+      var hems_field_value = {{ field_value_list | safe }};
+      console.log(hems_field_value);
+      {#  var hems_category_field = null;#}
+      {#  var hems_field_value = null;#}
+
+      function check_field_value(){
+          if($(this).val() == 'Custom_Command_Input'){
+              $('#custom').show();
+              $('#hems_field').hide();
+              $('#hems_field select').empty();
+              $('#value input').attr('placeholder','');
+          }
+          else{
+              $('#custom').hide();
+              $('#hems_field select').empty();
+              $('#value input').attr('placeholder','');
+              $('#hems_field').show();
+
+              if(hems_category_field===null || hems_field_value===null){
+                  for(var i=0;i<hems_data[$(this).val()].length;i++){
+                    $('#hems_field select').append('<option value="'+hems_data[$(this).val()][i]+'">'+hems_data[$(this).val()][i]+'</option>');
+                  }
+                  $('#value input').attr('placeholder','0');
+              }
+              else{
+                  for(var j=0;j<hems_category_field[$(this).val()].length;j++){
+                    $('#hems_field select').append('<option value="'+hems_category_field[$(this).val()][j]+'">'+hems_category_field[$(this).val()][j]+'</option>');
+                  }
+                  $('#value input').attr('placeholder',first_obj(hems_field_value));
+              }
+          }
+      }
+
+      function check_value(){
+          if(hems_category_field===null || hems_field_value===null){
+              $('#value input').attr('placeholder','0');
+          }else{
+              $('#value input').attr('placeholder',hems_field_value[$(this).val()]);
+          }
+      }
+
+      function first_obj(obj){
+          for (first_key in obj){
+              return obj[first_key];
+          }
+      }
+
+      $(document).ready(function(){
+          $('#hems_field').hide();
+          $('#hems_devices select').append('<option value="Custom_Command_Input">Custom_Command_Input</option>');
+          if(hems_category_field===null || hems_field_value===null){
+              for(var key in hems_data){
+                  console.log(key);
+                  $('#hems_devices select').append('<option value="'+key+'">'+key+'</option>');
+              }
+          }
+          else{
+              for(var key in hems_category_field){
+                  console.log(key);
+                  $('#hems_devices select').append('<option value="'+key+'">'+key+'</option>');
+              }
+          }
+          $('#hems_devices').find('select').change(function(){
+              check_field_value.call($('#hems_devices').find('select'));
+          });
+
+          $('#hems_field').find('select').change(function(){
+              check_value.call($('#hems_field').find('select'));
+          });
+      });
+  </script>
+</head>
+
+<body>
+  <form method="post" action="/hems/select_device/">{% csrf_token %}
+    <label for="hems_pi">HEMS Pi:</label>
+    <select name="hems_pi">
+      <option value="1">Pi1</option>
+      <option value="2">Pi2</option>
+      <option value="3">Pi3</option>
+    </select>
+
+    <label for="hems_method">HEMS Method:</label>
+    <select name="hems_method">
+      <option value="read">Read</option>
+      <option value="write">Write</option>
+    </select>
+    <div id="main">
+      <div id="hems_devices">
+        <label for="hems_devices">HEMS Category:</label>
+        <select name="hems_devices">
+        </select>
+      </div>
+      <br>
+
+      <div id="hems_field">
+        <label for="hems_field">Hems Field:</label>
+        <select name="hems_field">
+        </select>
+      </div>
+
+      <div id="custom">
+        <label for="hems_custom">HEMS Custom Input:</label>
+        <input type="text" name="hems_custom" style="color:black;"></input>
+      </div>
+      <div id="value">
+        <label for="hems_value">HEMS Value:</label>
+        <input type="number" name="hems_value" style="color: black;"></input>
+      </div>
+      <div id="submitButton">
+        <label for="submit">Submit:</label>
+        <button type="submit" class="button">Submit</button>
+      </div>
+    </div>   <!-- end of main -->
+
+  </form>  <!-- end of form -->
+
+  <form method="post" enctype="multipart/form-data" action="/hems/simpleUpload">{% csrf_token %}
+   <input type="file" name="csv_file" accept=".csv" required="True"></input>
+   <button type="submit">Upload</button>
+  </form>
+
+  <form method="POST" action="/hems/autoWriteOutbackSeries">{% csrf_token %}
+    <p>This section is used for automatically write values to OutBack after you have uploaded the csv file.</p>
+    <label for="write_box">Choose Pi:</label>
+    <select name="write_box">
+      <option value="1">Pi1</option>
+      <option value="2">Pi2</option>
+      <option value="3">Pi3</option>
+    </select>
+    <button type="submit">Auto Write</button>
+  </form>
+
+
+</body>
+</html>

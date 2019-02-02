@@ -1,0 +1,4 @@
+1. Install Rabbitmq on ec2.
+2. Make user permissions and pi_env for rabbitmq
+3. Install MySQL and setup database
+4. 

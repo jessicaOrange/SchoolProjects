@@ -1,0 +1,10 @@
+*.swp
+Shell
+*.tar
+*.zip
+tags
+.idea
+*.pyc
+.git
+*.swo
+logs/

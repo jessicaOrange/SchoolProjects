@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+{% load staticfiles %}
+
+<html>
+<head>
+  <title>HEMS</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+  <link rel="stylesheet" href="{% static "css/main.css" %}"/>
+  <link rel="stylesheet" href="{% static "css/customs.css" %}"/>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+  <form method="post" action="/register_pi/">{% csrf_token %}
+    <label for="hems_id">HEMS ID:</label>
+    <input type="text" name="hems_id" style="color: black;"></input>
+    <button type="submit" class="button">Register</button>
+  </form>
+</body>
+</html>

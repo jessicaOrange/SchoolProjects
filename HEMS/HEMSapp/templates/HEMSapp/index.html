@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+{% load staticfiles %}
+
+<html>
+	<head>
+		<title>HEMS</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="{% static "css/main.css" %}"/>
+		<!-- <link rel="stylesheet" href="assets/css/main.css" /> -->
+		<link rel="stylesheet" href="{% static "css/customs.css" %}"/>
+	</head>
+	<body>
+
+		<!-- Banner -->
+			<!-- <section id="banner" style='background: url("{% static "/static/images/banner.jpg" %}"); background-attachment: fixed;'> -->
+			<section id="banner" style='background-color: #5385C1; height: 100vh;'>
+				<h1>HEMS</h1>
+				<form method="post" action="login">{% csrf_token %}
+						<div class="login-container">
+								<div class="6u 12u$(xsmall)" style="margin: 10px; width: auto;">
+									<input type="text" name="username" id="username" value="" placeholder="Email" />
+								</div>
+								<div class="6u$ 12u$(xsmall)" style="margin: 10px; width: auto;">
+									<input type="password" name="password" id="password" value="" placeholder="Password" />
+								</div>
+								<button type="submit" class="button" style=" margin: auto; width: auto;">Login</button>
+								{% if messages %}
+									{% for message in messages %}
+										<span style="color: white;"> {{message}} </span>
+									{% endfor %}
+								{% endif %}
+						</div>
+				</form>
+			</section>
+
+
+		<!-- Scripts -->
+			<script src="{% static "/static/js/jquery.min.js" %}"></script>
+			<!-- <script src="assets/js/jquery.min.js"></script> -->
+			<script src="{% static "/static/js/skel.min.js" %}"></script>
+			<!-- <script src="assets/js/skel.min.js"></script> -->
+			<script src="{% static "/static/js/util.js" %}"></script>
+			<!-- <script src="assets/js/util.js"></script> -->
+			<script src="{% static "/static/js/main.js" %}"></script>
+			<!-- <script src="assets/js/main.js"></script> -->
+
+	</body>
+</html>

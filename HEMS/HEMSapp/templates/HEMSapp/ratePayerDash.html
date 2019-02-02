@@ -1,0 +1,170 @@
+<!DOCTYPE HTML>
+{% load staticfiles %}
+
+<html>
+	<head>
+		<title>HEMS</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+		<link rel="stylesheet" href="{% static 'css/main.css' %}"/>
+		<link rel="stylesheet" href="{% static 'css/customs.css' %}"/>
+
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<script>
+			var first_month = '{{first_month}}'
+			var boxes = '{{boxes}}'
+		</script>
+	</head>
+
+  <body class="subpage">
+
+    <!-- header -->
+    <header id="header" style="padding: 0px 10px;">
+      <!-- <div class="inner"> -->
+        <a href="/" class="logo" style="float: left; position: initial;">HEMS</a>
+        <nav id="nav">
+          <a href="home" style="float: right;">Home</a>
+          <a href="logout" style="float: right;">Logout</a>
+        </nav>
+        <a href="#navPanel" class="navPanelToggle"><span class="fa fa-bars"></span></a>
+      <!-- </div> -->
+    </header>
+
+    <!-- Main body-->
+		<div id="main-wrapper">
+			<!--  Left Panel -->
+			<div id="left-panel" style="float: left; width: 35%;">
+
+			<!-- User Info Box -->
+		    <div class="box" style="margin: 10px;">
+		      <div class="4u 12u$(medium)" style="width: 100%;">
+		        <h3>{{first_name}} {{last_name}}</h3>
+						<p>1356 N 12 St. </br> Phoenix, AZ 85212</p>
+						<p>Other information about user/building (type, custom name maybe)</p>
+						<a>link to utility website</a>
+		        <p> {{address}}</p>
+		      </div>
+		    </div>
+
+				<div class="box" style="margin: 10px;">
+		      <div class="4u 12u$(medium)" style="width: 100%;">
+						<div>
+							<div style="display: inline-block;"><h3>Your Devices</h3></div>
+							<div id="add-device-cont">
+								<a href="registerDevice">
+									<i class="fa fa-plus" aria-hidden="true" id="add-device-icon"></i>
+								</a>
+						</div>
+						</div>
+
+						<div class="table-wrapper">
+							{% for key, box in boxes.items %}
+							<div>
+								<h4 style="float: left; width: 50%; text-aligh: left">{{key}}</h4>
+								{% if box.status %}
+									<h5 style="float: right; width: 50%; text-align: right; color: LightGreen;">Online</h5>
+								{% else %}
+									<h5 style="float: right; width: 50%; text-align: right; color: FireBrick;">Offline</h5>
+								{% endif %}
+							</div>
+							<table>
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Description</th>
+										<th>Value</th>
+									</tr>
+								</thead>
+								<tbody>
+									{% for aKey, assetList in box.assets.items %}
+										{% for asset in assetList %}
+											<tr class="asset-row">
+												<td>{{asset.name}}</td>
+												<td>Some battery I bought.</td>
+												<td>30</td>
+											</tr>
+										{% endfor %}
+									{% endfor %}
+									</tr>
+								</tbody>
+							</table>
+							{% endfor %}
+						</div>
+
+						<div>
+							<a href="/hems/selectDevice">Check Devices</a>
+						</div>
+
+		      </div>
+		    </div>
+			</div>
+
+
+			<!-- graphs -->
+			<div class="right-block">
+			<div id="graphs-container" style=" width: 100%;">
+				<div id="graph-canv-cont">
+					<canvas class="graph" id="graph1"></canvas>
+				</div>
+				<!-- <div id="data-type-drop" class="select-wrapper">
+					<select id="date-select">
+						<option value="January 2017">January 2017</option>
+						<option value="February 2017">February 2017</option>
+						<option value="March 2017">March 2017</option>
+						<option value="April 2017">April 2017</option>
+					</select>
+				</div> -->
+				<!-- <div class="graph-canv-cont">
+					<canvas class="graph" id="graph2">graph 2</canvas>
+				</div> -->
+			</div>
+				<div id="rate-strucure-wrapper">
+					<h3>Summer Rate Structure</h3>
+					<table id="rate-structure-table" class="alt">
+						<thead>
+							<tr>
+								<th>Type</th>
+								<th>Price</th>
+								<th>kWh used</th>
+								<th>Total</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Flat</td>
+								<td class="flat-price">$</td>
+								<td></td>
+								<td class="flat-price">$</td>
+							</tr>
+							<tr>
+								<td>On-Peak</td>
+								<td>$0.3013 per kWh</td>
+								<td id="peak-power-used"></td>
+								<td id="peak-cost">$</td>
+							</tr>
+							<tr>
+								<td>Off-Peak</td>
+								<td>$0.082 per kWh</td>
+								<td id="base-power-used"></td>
+								<td id="base-cost">$</td>
+							</tr>
+						</tbody>
+					  <tfoot>
+							<td colspan="3"></td>
+							<td id="total-cost">$</td>
+						</tfoot>
+					</table>
+				</div>
+
+			</div>
+		</div>
+
+	<script src="{% static 'js/node_modules/moment/moment.js' %}"></script>
+	<script src="{% static 'js/node_modules/chart.js/dist/Chart.js' %}"></script>
+
+	<script src="{% static 'js/dashboard.js' %}"></script>
+
+</body>

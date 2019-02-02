@@ -1,0 +1,65 @@
+/* HOME */
+.login-container {
+  width: 380px;
+  margin: auto;
+}
+
+.custom-footer{
+  height: 120px;
+  width: auto;
+  background-color: white;
+  padding: 10px 0;
+}
+
+/* DASHBOARD */
+tr.asset-row:hover{
+  cursor: pointer;
+  background-color: #DDDDDD;
+}
+
+.right-block{
+  display: inline-block;
+  width: auto;
+}
+
+#graphs-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#graph-canv-cont{
+  width: 700px;
+  display: inline-block;
+  margin: auto;
+}
+
+.graph{
+  margin: 10px;
+  text-align: center;
+  display: inline-block;
+  height: 300px;
+  width: 480px;
+}
+
+#data-type-drop{
+  display: inline-block;
+  width: 80%;
+  margin: auto;
+}
+
+#rate-strucure-wrapper{
+  padding: 10px;
+  margin: 10px;
+  width: 900px;
+}
+
+#add-device-cont {
+  margin-left: 15px;
+  margin-top: 9px;
+  float: right;
+}
+  #add-device-icon:hover{
+    cursor: pointer;
+    color: black;
+  }
