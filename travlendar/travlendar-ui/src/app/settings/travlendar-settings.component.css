@@ -1,0 +1,54 @@
+.settings-body {
+}
+
+.settings-address {
+  background-color: #d6eaff;
+  margin: 0;
+  height: 100vh;
+}
+
+.settings-modes_travel {
+    background-color: white;
+}
+
+.settings-calendar-view {
+    background-color: AliceBlue;
+}
+
+label {
+	color: #333333;
+	font-weight: 400;
+}
+
+.cb-item {
+  width: 120px !important;
+}
+
+.btn {
+  font-size: 1.25em;
+  border-radius: 5px;
+}
+
+.sel-cal {
+  min-height: 150px;
+}
+
+.arr-vert {
+  margin: auto;
+  margin-top: 35px;
+
+  height: 120px;
+}
+
+.btn-arr {
+  border-radius: 50%;
+  border: none;
+  background: none;
+  margin: auto;
+
+  font-weight: bold;
+}
+
+.pac-container {
+  z-index: 100000;
+}

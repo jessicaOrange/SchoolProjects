@@ -1,0 +1,151 @@
+<div class="settings-body">
+  <div class="settings-address">
+    <div class="container">
+      <div class="text">
+        <h2>Defaults</h2>
+      </div>
+      <form (ngSubmit)="saveClicked(f)" #f="ngForm">
+        <div class="container">
+          <h3>Traveling</h3>
+          <div class="row">
+            <div class="col-md-8">
+              <h4>Start location <span class="req">*</span>
+                <p class="fa fa-info-circle"
+                   data-toggle="tooltip"
+                   title="Enter starting address (Home Address, etc) as in where your day starts from."
+                ></p></h4>
+              <div class="form-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="def-address"
+                  id="def-address"
+                  placeholder="Address"
+                  [(ngModel)]="address"
+                  #ss="ngModel"
+                  [ngClass]="{'border-err': ss.touched && !ss.valid && address.length === 0}"
+                  required
+                  #gaddress
+                />
+              </div>
+            </div> <!-- start location -->
+          </div>
+
+          <div class="row">
+            <div class="col-md-8">
+              <h4>Transportation methods<span class="req">*</span>
+                <p class="fa fa-info-circle"
+                   data-toggle="tooltip"
+                   title="We'll tell you what'll be quickest, but we can skip these if you don't have access to them"
+                ></p></h4>
+              <div class="form-group checkbox-group">
+                <span *ngFor="let transport of transportationMode; let i=index"  [ngStyle]="{'padding': '0', 'margin': '0'}">
+                  <input type="checkbox" [ngStyle]="{'width': '20px', 'height': '20px'}"
+                         id="{{transport.name}}"
+                         (change)="setSelectedTransport(transport.name, $event.srcElement.checked)"
+                         [checked]="transport.selected"
+                         class="form-control-inline"
+                  ><label class="checkbox-inline cb-item"
+                         for="{{transport.name}}"
+                         [ngStyle]="{'padding': '0', 'margin-top': '-10px', 'margin-left': '2px', 'margin-right': '20px'}"
+                  >{{transport.name}}</label>
+                </span>
+              </div>
+            </div> <!-- start location -->
+          </div>
+
+          <div class ="row" *ngIf="selectedTransportation.indexOf('Transit') !== -1">
+            <div class="col-md-8">
+              <h4>Preferred Methods of Transit</h4>
+              <div class="form-group">
+                <span *ngFor="let transitOption of preferredTransitModes">
+                  <input type="checkbox" class="form-control-inline" id="{{transitOption}}"
+                         [checked]="hasTransitModeChecked(transitOption)" (change)="setPreferredTransitMode(transitOption, $event)"
+                  [ngStyle]="{'width':'20px','height':'20px'}">
+                  <label for="{{transitOption}}" class="checkbox-inline"
+                         [ngStyle]="{'padding':'0', 'margin-top':'-10px', 'margin-right':'40px'}">{{transitOption}}</label>
+                </span>
+              </div>
+            </div>
+          </div>
+
+        </div> <!-- traveling -->
+
+        <div class="container">
+          <h3>Visuals</h3>
+          <div class="row">
+            <div class="col-md-8">
+              <div class="form-group">
+                <label for="calendar">Calendar View <p class="fa fa-info-circle" data-toggle="tooltip" title="What would you like the calendar to show when opening"></p></label>
+                <select name="calendar"
+                        id="calendar"
+                        [(ngModel)]="selectedCalendarView"
+                        class="form-control"
+                ><option *ngFor="let cView of calendarView; let i = index"
+                         [ngValue]="cView"
+                >{{cView}}</option>
+                </select>
+              </div>
+            </div> <!-- UI -->
+          </div>
+          <br>
+          <div class="row">
+
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="calendar">Calendar To Clone &nbsp;<p class="fa fa-info-circle" data-toggle="tooltip" title="Select calendars to clone from your regular Google Calendars"></p></label>
+                <select multiple name="gCalendars"
+                        id="gCalendars"
+                        [(ngModel)]="gCalSelected"
+                        class="form-control sel-cal"
+                ><option *ngFor="let calendar of gCalendars; let i = index" [ngValue]="calendar">{{calendar['gCal_summary']}}</option>
+                </select>
+              </div>
+            </div> <!-- UI -->
+
+            <div class="col-md-2 text-center arr-vert">
+              <div class="row">
+                <button class="btn btn-default btn-arr" type="button" (click)="moveAllAsSelected()">>></button>
+              </div>
+              <div class="row">
+                <button class="btn btn-default btn-arr" type="button" (click)="moveToClone()">></button>
+              </div>
+              <div class="row">
+                <button class="btn btn-default btn-arr" type="button" (click)="moveFromClone()"><</button>
+              </div>
+              <div class="row">
+                <button class="btn btn-default btn-arr" type="button" (click)="moveAllAsUnSelected()"><<</button>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="calendar">Calendars Cloned &nbsp;<p class="fa fa-info-circle" data-toggle="tooltip" title="Current cloned calendars authorized for travlendar usage"></p></label>
+                <select multiple name="clonedCalendar"
+                        id="clonedCalendars"
+                        [(ngModel)]="cloneSelected"
+                        class="form-control sel-cal"
+                ><option *ngFor="let calendar of cloneCalendars; let i = index" [ngValue]="calendar">{{calendar['gCal_summary']}}</option>
+                </select>
+              </div>
+            </div> <!-- UI -->
+
+          </div>
+
+        </div> <!-- app -->
+        <br>
+        <div class="bottom-page">
+          <button class="btn btn-primary"
+                  [ngStyle]="{'margin-left': '15px', 'margin-right': '10px'}"
+                  [disabled]="address.length===0 || selectedTransportation.length === 0"
+          >Save</button>
+          <!--button class="btn btn-outline-primary"
+                  type="button"
+                  (click)="cancelClicked()"
+          >Cancel</button-->
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>

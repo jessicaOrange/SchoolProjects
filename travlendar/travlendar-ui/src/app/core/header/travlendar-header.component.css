@@ -1,0 +1,18 @@
+.travlendar-logo {
+	padding: 0;
+	margin-top: 0px
+}
+
+.nav-tabs > li > a {
+  font-size: 1.25em;
+}
+
+.nav-tabs > li > a:focus {
+  background-color: #fff;
+  color: #000;
+  font-size: 1.25em;
+}
+
+nav {
+  margin-bottom: 0;
+}

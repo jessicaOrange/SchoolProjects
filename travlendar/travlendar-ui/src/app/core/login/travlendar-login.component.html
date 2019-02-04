@@ -1,0 +1,126 @@
+<div class="container">
+	<div class="center-text">
+		<div class="text-center">
+			<i class="fa fa-spinner fa-spin" *ngIf="isLoading"></i>
+		</div>
+	</div>
+	<div class="slider">
+		<div id="about-slider">
+			<div id="carousel-slider" class="carousel slide" data-ride="carousel">
+				<!-- Indicators -->
+				<ol class="carousel-indicators visible-xs">
+					<li data-target="#carousel-slider" data-slide-to="0" class="active"></li>
+					<li data-target="#carousel-slider" data-slide-to="1" class=""></li>
+					<li data-target="#carousel-slider" data-slide-to="2" class=""></li>
+				</ol>
+
+				<div class="carousel-inner">
+					<div class="item active">
+						<img src="assets/img/slide3.jpg" class="img-responsive" alt="">
+						<div class="carousel-caption">
+							<div class="wow fadeInUp animated" data-wow-offset="0" data-wow-delay="0.3s" style="visibility: visible;-webkit-animation-delay: 0.3s; -moz-animation-delay: 0.3s; animation-delay: 0.3s;">
+								<h2>Say hello to being on time</h2>
+							</div>
+							<div class="col-md-10 col-md-offset-1">
+								<div class="wow fadeInUp animated" data-wow-offset="0" data-wow-delay="0.6s" style="visibility: visible;-webkit-animation-delay: 0.6s; -moz-animation-delay: 0.6s; animation-delay: 0.6s;">
+									<p>Because being fashionably late is out of style</p>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="item">
+						<img src="assets/img/slide1.jpg" class="img-responsive" alt="">
+						<div class="carousel-caption">
+							<div class="wow fadeInUp animated" data-wow-offset="0" data-wow-delay="1.0s" style="visibility: visible;-webkit-animation-delay: 1.0s; -moz-animation-delay: 1.0s; animation-delay: 1.0s;">
+								<h2>We take care of the wheres and whens</h2>
+							</div>
+							<div class="col-md-10 col-md-offset-1">
+								<div class="wow fadeInUp animated" data-wow-offset="0" data-wow-delay="0.6s" style="visibility: visible;-webkit-animation-delay: 0.6s; -moz-animation-delay: 0.6s; animation-delay: 0.6s;">
+									<p>We'll handle when you need to get going</p>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="item">
+						<img src="assets/img/slide2.jpg" class="img-responsive" alt="">
+						<div class="carousel-caption">
+							<div class="wow fadeInUp animated" data-wow-offset="0" data-wow-delay="0.3s" style="visibility: visible;-webkit-animation-delay: 0.3s; -moz-animation-delay: 0.3s; animation-delay: 0.3s;">
+								<h2><span>For those days that are working against you</span></h2>
+							</div>
+							<div class="col-md-10 col-md-offset-1">
+								<div class="wow fadeInUp animated" data-wow-offset="0" data-wow-delay="0.6s" style="visibility: visible;-webkit-animation-delay: 0.6s; -moz-animation-delay: 0.6s; animation-delay: 0.6s;">
+									<p>Add some smarts to your calendar</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<a class="left carousel-control hidden-xs" href="#carousel-slider" data-slide="prev">
+					<i class="fa fa-angle-left"></i>
+				</a>
+
+				<a class=" right carousel-control hidden-xs" href="#carousel-slider" data-slide="next">
+					<i class="fa fa-angle-right"></i>
+				</a>
+			</div>
+			<!--/#carousel-slider-->
+		</div>
+		<!--/#about-slider-->
+	</div>
+</div>
+
+<div class="container">
+	<div class="about">
+		<div class="container">
+			<div class="text-center">
+				<h2>Say hello to being on time</h2>
+				<div class="col-md-10 col-md-offset-1">
+					<p>We act as an extension to Google Calendar, if you need a Google Account, you can
+						<a href="https://accounts.google.com/SignUp">sign up</a>.</p>
+				</div>
+
+				<div class="col-md-12">
+					<button class="btn ggl-btn" (click)= "signinClick()"></button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<hr>
+
+<div class="container">
+	<div class="services">
+		<div class="container">
+			<div class="text-center">
+				<h2>Travlendar features</h2>
+			</div>
+			<div class="col-md-3 wow fadeInDown animated" data-wow-duration="1000ms" data-wow-delay="300ms" style="visibility: visible;-webkit-animation-duration: 1000ms; -moz-animation-duration: 1000ms; animation-duration: 1000ms;-webkit-animation-delay: 300ms; -moz-animation-delay: 300ms; animation-delay: 300ms;">
+				<i class="fa fa-rocket"></i>
+				<h3>Travel times</h3>
+				<p>Travlendar computes the travel time between events to help you visualize and plan where you'll be and how long it'll take to get there.</p>
+			</div>
+			<div class="col-md-3 wow fadeInDown animated" data-wow-duration="1000ms" data-wow-delay="600ms" style="visibility: visible;-webkit-animation-duration: 1000ms; -moz-animation-duration: 1000ms; animation-duration: 1000ms;-webkit-animation-delay: 600ms; -moz-animation-delay: 600ms; animation-delay: 600ms;">
+				<i class="fa fa-calendar"></i>
+				<h3>Floating events</h3>
+				<p>Not that picky? You can add events like, for example, a thirty minute lunch that occurs daily between 11:30 and 1:00, depending on your day-to-day meetings, we'll find a time for you.</p>
+			</div>
+			<div class="col-md-3 wow fadeInDown animated" data-wow-duration="1000ms" data-wow-delay="900ms" style="visibility: visible;-webkit-animation-duration: 1000ms; -moz-animation-duration: 1000ms; animation-duration: 1000ms;-webkit-animation-delay: 900ms; -moz-animation-delay: 900ms; animation-delay: 900ms;">
+				<i class="fa fa-book"></i>
+				<h3>Lightweight extension</h3>
+				<p>We use your Google Calendar and work from there. No need to micromanage and clone events between calendars.</p>
+			</div>
+			<div class="col-md-3 wow fadeInDown animated" data-wow-duration="1000ms" data-wow-delay="1200ms" style="visibility: visible;-webkit-animation-duration: 1000ms; -moz-animation-duration: 1000ms; animation-duration: 1000ms;-webkit-animation-delay: 1200ms; -moz-animation-delay: 1200ms; animation-delay: 1200ms;">
+				<i class="fa fa-gear"></i>
+				<h3>Easily customizable</h3>
+				<p>You can decide how we work for you. We'll be as smart as we can, but you can always set us straight and tell us what you want to happen.</p>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- ToS Modal implementation -->
+<app-tos-modal [notLogin]="notLogin" (isAccepted)="tosAccepted($event)"></app-tos-modal>

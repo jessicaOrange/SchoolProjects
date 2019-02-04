@@ -1,0 +1,293 @@
+<div class="modal fade" id="eventModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <button class="close" data-dismiss="modal">
+          &times;
+        </button>
+        <h2 class="modal-summary">Travlendar Event</h2>
+      </div>
+
+      <form class="form" (ngSubmit)="onSubmit(eventForm)" #eventForm="ngForm">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="container">
+
+                <div class="col-md-12">
+                  <h3>Event Information</h3>
+                  <div class="form-group">
+                    <input type="text" class="form-control" name="evnt-summary"
+                           id="evnt-summary" placeholder="Event Title"
+                           [(ngModel)]="eventModel.resource.summary" required>
+                  </div>
+
+                  <form class="form-inline">
+                    <div class="form-group">
+                      <label>All day
+                        <input type="checkbox"
+                               name="evnt-isallday"
+                               id="evnt-isallday"
+                               (change)="handleScheduling(true,false)"
+                               [checked]="eventModel.isAllDayEvent"
+                               [disabled]="eventModel.isFloatingEvent"
+                        >
+                      </label>
+                    </div>
+                    <div class="form-group">
+                      <label>Floating
+                        <input
+                          type="checkbox"
+                          name="evnt-isfloating"
+                          id="evnt-isfloating"
+                          (change)="handleScheduling(false,true)"
+                          [checked]="eventModel.isFloatingEvent"
+                          [disabled]="eventModel.isAllDayEvent"
+                        >
+                      </label>
+                    </div>
+                    <div class="form-group">
+                      <label>Repeat
+                        <input type="checkbox"
+                          name="evnt-doesrepeat"
+                          id="evnt-doesrepeat"
+                          (change)="eventModel.doesRepeat = !eventModel.doesRepeat"
+                          [checked]="eventModel.doesRepeat"
+                        >
+                      </label>
+                    </div>
+                  </form>
+
+                  <form class="form-inline">
+                    <div class="form-group">
+                      <label *ngIf="!eventModel.isAllDayEvent && !eventModel.isFloatingEvent">From</label>
+                      <label *ngIf="eventModel.isAllDayEvent">Day of event</label>
+                      <label *ngIf="eventModel.isFloatingEvent">Schedule on</label>
+                      <div class="form-group">
+                        <!-- using angular date pipe to format date and time -->
+                        <input type="date"
+                               class="form-control"
+                               name="evnt-startdate"
+                               id="evnt-startdate"
+                               [ngModel]="eventModel.resource.start | date: 'yyyy-MM-dd'"
+                               (ngModelChange)="addTimeValue($event, 'start', true); handleRepeatMonthlyText();"
+                               required
+                        ></div>
+                      <div class="form-group" *ngIf="!eventModel.isAllDayEvent && !eventModel.isFloatingEvent">
+                        <input type="time"
+                               class="form-control"
+                               name="evnt-starttime"
+                               id="evnt-starttime"
+                               [ngModel]="eventModel.resource.start | date: 'HH:mm'"
+                               (ngModelChange)="addTimeValue($event, 'start')"
+                               step="1800"
+                               required
+                        ></div>
+                    </div>
+                    <div class="form-group" *ngIf="!eventModel.isAllDayEvent && !eventModel.isFloatingEvent">
+                      <label>to</label>
+                      <div class="form-group">
+                        <input type="date"
+                               class="form-control"
+                               name="evnt-enddate"
+                               id="evnt-enddate"
+                               [ngModel]="eventModel.resource.end | date: 'yyyy-MM-dd'"
+                               (ngModelChange)="addTimeValue($event, 'end', true)"
+                               required
+                        ></div>
+                      <div class="form-group">
+                        <input type="time"
+                               class="form-control"
+                               name="evnt-endtime"
+                               id="evnt-endtime"
+                               [ngModel]="eventModel.resource.end | date: 'HH:mm'"
+                               (ngModelChange)="addTimeValue($event, 'end')"
+                               step="1800"
+                               required
+                        ></div>
+                    </div>
+                    <div class="form-group" *ngIf="eventModel.isFloatingEvent && !eventModel.isAllDayEvent">
+                      <label>between</label>
+                      <div class="form-group">
+                        <input type="time"
+                               class="form-control"
+                               name="evnt-floating-starttime"
+                               id="evnt-floating-starttime"
+                               [ngModel]="eventModel.floatingConstraints.start | date: 'HH:mm'"
+                               step="1800"
+                               required
+                        >
+                      </div>
+                      <label>&amp;</label>
+                      <div class="form-group">
+                        <input type="time"
+                               class="form-control"
+                               name="evnt-floating-endtime"
+                               id="evnt-floating-endtime"
+                               [ngModel]="eventModel.floatingConstraints.end | date: 'HH:mm'"
+                               step="1800"
+                               required
+                        >
+                      </div>
+                      <label>for</label>
+                      <div class="form-group">
+                        <input type="number"
+                               class="form-control"
+                               name="evnt-floating-duration"
+                               [ngModel]="eventModel.floatingConstraints.duration | date: 'HH:mm'"
+                               required
+                               min="1"
+                               max="720"
+                        >
+                      </div>
+                      <label>minutes</label>
+                    </div>
+                  </form>
+                </div>
+
+                <div class="col-md-12" *ngIf="eventModel.doesRepeat">
+                  <div class="form-group form-inline">
+                    <label>Repeat every</label>
+                    <input type="number" class="form-control" name="evnt-repeat-num" min="1" max="366" required value="1" [(ngModel)]="recur.num">
+                    <select class="form-control" name="evnt-repeat-interval" value="repeat-days" [(ngModel)]="recur.interval">
+                      <option value="repeat-days">days</option>
+                      <option value="repeat-weeks">weeks</option>
+                      <option value="repeat-months">months</option>
+                      <option value="repeat-years">years</option>
+                    </select>
+                    <div class="form-group form-inline" *ngIf="recur.interval == 'repeat-weeks'">
+                      <!-- If week -->
+                      <label>on</label>
+                      <button type="button" [ngClass]="(recur.weekly[0])?'repeat-day-selected':''" (click)="handleRepeatWeeklyDay(0)" class="btn btn-xs repeat-day-button" name="evnt-repeat-weekly-sun">S</button>
+                      <button type="button" [ngClass]="(recur.weekly[1])?'repeat-day-selected':''" (click)="handleRepeatWeeklyDay(1)" class="btn btn-xs repeat-day-button" name="evnt-repeat-weekly-mon">M</button>
+                      <button type="button" [ngClass]="(recur.weekly[2])?'repeat-day-selected':''" (click)="handleRepeatWeeklyDay(2)" class="btn btn-xs repeat-day-button" name="evnt-repeat-weekly-tue">T</button>
+                      <button type="button" [ngClass]="(recur.weekly[3])?'repeat-day-selected':''" (click)="handleRepeatWeeklyDay(3)" class="btn btn-xs repeat-day-button" name="evnt-repeat-weekly-wed">W</button>
+                      <button type="button" [ngClass]="(recur.weekly[4])?'repeat-day-selected':''" (click)="handleRepeatWeeklyDay(4)" class="btn btn-xs repeat-day-button" name="evnt-repeat-weekly-thu">T</button>
+                      <button type="button" [ngClass]="(recur.weekly[5])?'repeat-day-selected':''" (click)="handleRepeatWeeklyDay(5)" class="btn btn-xs repeat-day-button" name="evnt-repeat-weekly-fri">F</button>
+                      <button type="button" [ngClass]="(recur.weekly[6])?'repeat-day-selected':''" (click)="handleRepeatWeeklyDay(6)" class="btn btn-xs repeat-day-button" name="evnt-repeat-weekly-sat">S</button>
+                    </div>
+                    <div class="form-group form-inline" *ngIf="recur.interval == 'repeat-months'">
+                      <!-- If month -->
+                      <label>on</label>
+                      <select class="form-control" name="evnt-repeat-monthly" id="evnt-repeat-monthly">
+                        <option value="repeat-onmonth-day">day {{repeatOnMonthDay}}</option>
+                        <option value="repeat-onmonth-dayofweek">the {{repeatOnMonthDayOfWeek}}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group form-inline">
+                    <label>and stop repeating</label>
+                    <select class="form-control" name="evnt-repeat-stop" id="evnt-repeat-stop" (change)="handleRepeatStopChange()">
+                      <option value="repeat-stop-never">never</option>
+                      <option value="repeat-stop-on">on</option>
+                      <option value="repeat-stop-after">after</option>
+                    </select>
+                    <div class="form-group form-inline" *ngIf="recur.stop != null && recur.stop.date != null">
+                      <!-- If on -->
+                      <div class="form-group">
+                        <input type="date"
+                                class="form-control"
+                                name="evnt-repeat-enddate"
+                                id="evnt-repeat-enddate"
+                                [(ngModel)]="recur.stop.date"
+                                required
+                        >
+                      </div>
+                    </div>
+                    <div class="form-group form-inline" *ngIf="recur.stop != null && recur.stop.occurances != null">
+                      <!-- If after -->
+                      <div class="form-group">
+                        <input type="number" class="form-control" name="evnt-repeat-endoccurances" min="1" max="2048" value="1" [(ngModel)]="recur.stop.occurances">
+                        <label>occurances</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-12" >
+                  <div class="form-group">
+                    <textarea class="form-control" name="evnt-desc" id="evnt-desc" cols="30" rows="5"
+                              [(ngModel)]="eventModel.resource.description" placeholder="Event Description"></textarea>
+                  </div>
+                </div>
+
+                <div class="col-md-12">
+                  <h3>Event location</h3>
+
+                  <div class="form-group">
+                      <label>Use previous event's location as a start location
+                        <input type="checkbox" name="evnt-travevent" id="evnt-travevent"
+                               (change)="eventModel.overrideStartLocation = !eventModel.overrideStartLocation" checked>
+                      </label>
+                  </div>
+
+                  <div class="form-group form-inline">
+                      <label>Event is at</label>
+                      <input type="text"
+                             class="input-sameline form-control"
+                             name="evnt-address"
+                             id="evnt-address"
+                             [ngModel]="parseAddress(eventModel.endLocation)"
+                             #gglAddress
+                             placeholder="Enter address"
+                      >
+                  </div>
+
+                  <div [hidden]="!eventModel.overrideStartLocation">
+                    <div>
+                        <div class="form-group form-inline">
+                          <label>Going to event starting from</label>
+                          <input type="text"
+                                 class="input-sameline form-control"
+                                 name="evnt-eaddress"
+                                 id="evnt-eaddress"
+                                 [ngModel]="parseAddress(eventModel.startLocation)"
+                                 #gglSAddress
+                                 placeholder="Enter address">
+                        </div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="col-md-12">
+                  <h3>Transportation</h3>
+
+                  <div class="form-group">
+                    <label>Use Travlendar travel recommendation
+                      <input type="checkbox" name="evnt-userecomendation" id="evnt-userecomendation" checked
+                             (change)="eventModel.transportation.usingRecommendation = !eventModel.transportation.usingRecommendation">
+                    </label>
+                  </div>
+                  <div class="form-group">
+                    <table *ngIf="!eventModel.transportation.usingRecommendation">
+                      <tr>
+                        <td>
+                          <label for="evnt-to-event" class="control-label">Travel Mode:</label>
+                        </td>
+                        <td>
+                          <select class="form-control" name="evnt-to-event" id="evnt-to-event"
+                                  [(ngModel)]="eventModel.transportation.override">
+                            <option *ngFor="let otranOpt of travelOptions" [ngValue]="otranOpt" required>{{otranOpt}}</option>
+                          </select>
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal Footer -->
+        <div class="modal-footer">
+          <button class="btn btn-primary" [disabled]="eventForm.invalid || !eventForm.touched" >{{btnAction}}</button>
+          <button class="btn btn-outline-primary" data-dismiss="modal" (click)="onCancel()">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

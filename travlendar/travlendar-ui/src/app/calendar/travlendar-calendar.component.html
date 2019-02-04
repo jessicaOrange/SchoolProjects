@@ -1,0 +1,118 @@
+<!-- <ng-template #modalContent let-close="close">
+  <div class="modal-header">
+    <h5 class="modal-title">Event action occurred</h5>
+    <button type="button" class="close" (click)="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div>
+      Action:
+      <pre>{{ modalData?.action }}</pre>
+    </div>
+    <div>
+      Event:
+      <pre>{{ modalData?.event | json }}</pre>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="close()">OK</button>
+  </div>
+</ng-template> -->
+<div class="container cal-view">
+  <div class="row text-center">
+    <div class="col-md-4">
+      <div class="btn-group">
+        <div
+          mwlCalendarPreviousView
+          class="btn btn-primarycal-text"
+          [view]="view"
+          [(viewDate)]="viewDate"
+          (viewDateChange)="activeDayIsOpen = false">
+          Previous
+        </div>
+        <div
+          mwlCalendarToday
+          class="btn btn-outline-secondarycal-text"
+          [(viewDate)]="viewDate">
+          Today
+        </div>
+        <div
+          mwlCalendarNextView
+          class="btn btn-primarycal-text"
+          [view]="view"
+          [(viewDate)]="viewDate"
+          (viewDateChange)="activeDayIsOpen = false">
+          Next
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+    </div>
+    <div class="col-md-4">
+      <div class="btn-group">
+        <div
+          class="btn btn-primary"
+          (click)="view = 'month'"
+          [class.active]="view === 'month'">
+          Month
+        </div>
+        <div
+          class="btn btn-primary"
+          (click)="view = 'week'"
+          [class.active]="view === 'week'">
+          Week
+        </div>
+        <div
+          class="btn btn-primary"
+          (click)="view = 'day'"
+          [class.active]="view === 'day'">
+          Day
+        </div>
+        <div
+          class="btn btn-primary"
+          (click)="createNewEvent()">
+          New Event
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+</div>
+
+<div [ngSwitch]="view">
+  <mwl-calendar-day-view class="cal-color"
+                         *ngSwitchCase="'day'"
+                         [viewDate]="viewDate"
+                         [events]="events"
+                         [refresh]="refresh"
+                         (eventClicked)="showTheEvent($event.event)"
+  ></mwl-calendar-day-view>
+  <mwl-calendar-week-view class="cal-color"
+                          *ngSwitchCase="'week'"
+                          [viewDate]="viewDate"
+                          [events]="events"
+                          [refresh]="refresh"
+                          (dayHeaderClicked)="viewDate=$event.day.date; view='day'"
+                          (eventClicked)="showTheEvent($event.event)"
+  ></mwl-calendar-week-view>
+  <my-calendar-month-view class="cal-color"
+                           *ngSwitchCase="'month'"
+                           [viewDate]="viewDate"
+                           [events]="events"
+                           (eventClicked)="showTheEvent($event.event)"
+                           (dayClicked)="daySelected($event.day); viewDate=$event.day.date; dayClicked($event.day)"
+                           (dayDoubleClicked)="createNewEvent($event.day.date)"
+                           [refresh]="refresh"
+                           [activeDayIsOpen]="activeDayIsOpen"
+  >
+  </my-calendar-month-view>
+</div>
+
+<!-- This is the Event modal component for adding/editing events. "-->
+<app-travlendar-event-modal [eventData]="eventData" (eventModalSubmitted)="saveEvent($event)">
+</app-travlendar-event-modal>
+<!--This is the travel event modal component for displaying travel events-->
+<app-travlendar-travel-modal [travelEventData]="travelEventData"></app-travlendar-travel-modal>
+<div *ngIf="spinnerIsOn" class="loader"></div>

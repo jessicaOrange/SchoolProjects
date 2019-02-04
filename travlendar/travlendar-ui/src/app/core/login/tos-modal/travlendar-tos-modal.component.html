@@ -1,0 +1,105 @@
+<div class="row">
+  <div class="col-md-10">
+    <div class="container-fluid">
+      <div class="row">
+        <!--Begin Modal-->
+        <div class="modal fade" id="tosModal"
+             tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button"
+                        class="close"
+                        data-dismiss="modal"
+                >&times;</button>
+                <h3 class="modal-title">Travlendar: Terms of Service Agreement / Privacy Policy</h3>
+              </div>
+              <div class="modal-body">
+                <div class="container-fluid">
+                  <div class="tosBox">
+                    <h3>The MIT License (MIT)</h3>
+                    <h4>Copyright (c) 2017 https://Travlendar.me</h4><hr>
+                    <p class="tosText">
+                      Permission is hereby granted, free of charge, to any
+                      person obtaining a copy of this software and associated
+                      documentation files (the "Software"), to deal in the
+                      Software without restriction, including without limitation
+                      the rights to use, copy, modify, merge, publish, distribute,
+                      sublicense, and/or sell copies of the Software, and to permit
+                      persons to whom the Software is furnished to do so, subject
+                      to the following conditions:
+                    </p>
+                    <p class="tosText">
+                      The above copyright notice and this permission notice shall
+                      be included in all copies or substantial portions of the Software.
+                    </p>
+                    <p class="tosText">
+                      THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+                      EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+                      MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+                      IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+                      CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+                      TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+                      SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+                    </p>
+                    <h4>TERMS OF USE</h4>
+                    <p class="tosText">
+                      By use of https://Travlendar.me you are also bound by
+                      <a href="https://www.google.com/intl/en/policies/terms/" style="color: blue">Google's Terms of Service.</a>
+                      Further, https://Travlendar.me will not be held liable for any data corruption that
+                      may occur through bugs or other means.
+                    </p>
+                    <h4>PRIVACY POLICY</h4>
+                    <p class="tosText">
+                      https://Travlendar.me makes use of users Google Maps API's and Google Calendar API's
+                      attempting to adhering to <a href="https://www.google.com/policies/privacy/" style="color: blue">Google's Privacy Policy</a> in order
+                      to provide users with interactions between their Google calendars, to
+                      provide address auto-completion, and mapping features to users. Further,
+                      https://Travlendar.me uses user data to add a https://Travlendar.me
+                      calendar to the users Google calendars. https://Travlendar.me also uses
+                      user data for reading users calendar events for any of the selected
+                      calendars by the user through the settings page. This data will be used
+                      to update the https://Travlendar.me calendar, to provide services through
+                      https://Travlendar.me. https://Travlendar.me has no intention of using users
+                      data other than for the features provided through https://Travlendar.me.
+                    </p>
+                    <h4>DATA COLLECTION</h4>
+                    <p class="tosText">
+                      https://Travlendar.me collects user data through use of https://Travlendar.me
+                      services. https://Travlendar.me stores access tokens provided for retrieving
+                      information pertaining to any https://Travlendar.me services that
+                      https://Travlendar.me provides to users. https://Travlendar.me also collects
+                      data provided by users from the settings page, as well as any data that cannot
+                      be stored in the Google https://Travlendar.me Calendar which will be
+                      established upon agreement to the https://Travlendar.me "Terms Of Service",
+                      and "Privacy Policy". While https://Travlendar.me has no intention of misuse
+                      of users data, https://Travlendar.me claims no responsibility to users data.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <div class="col-md-12" *ngIf="!notLogin">
+                  <button type="button"
+                          class="btn btn-outline-primary"
+                          [ngStyle]="{'margin-left': '0'}"
+                          (click)="termsAccept(false)"
+                  >Cancel</button>
+                  <button class="btn btn-primary"
+                          type="button"
+                          [ngStyle]="{'margin-right': '0'}"
+                          (click)="termsAccept(true)"
+                  >Accept</button>
+                </div>
+                <div class="col-md-12" *ngIf="notLogin">
+                  <button type="button" class="btn btn-primary" (click)="toggleModal()">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--End Modal-->
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,75 @@
+.repeat-day-button {
+  padding: 0px 4px;
+  margin-top: 0px;
+}
+
+button:focus {
+  outline:none !important;
+}
+
+.repeat-day-selected {
+  background-color: #349aff;
+  color: #fdff62;
+}
+
+#evnt-address {
+  width: 75%;
+}
+
+#evnt-eaddress {
+  width: 60%;
+}
+
+label {
+  color: darkgrey;
+}
+
+.container {
+  text-align: left
+}
+
+.form-inline {
+  margin-top: 4px;
+}
+
+label {
+  margin-right: 8px;
+}
+
+textarea table{
+  resize: inherit;
+}
+
+td {
+  text-align: left;
+  padding-top: 5px;
+  padding-right: 6px;
+}
+
+:placeholder-shown {
+  color: darkgrey;
+}
+
+.btn {
+  font-size: 1.25em;
+  border-radius: 5px;
+}
+
+.btn.btn-primary:hover {
+  color: #67A7ED;
+}
+
+input.ng-touched.ng-invalid {
+  border: solid 1px red;
+}
+
+input.ng-untouched.ng-dirty{
+  border: solid 1px red;
+}
+
+/*Solution to Google auto complete display issue found at
+https://stackoverflow.com/questions/20185606/google-places-autocomplete-not-showing-up
+*/
+.pac-container {
+  z-index: 100000;
+}

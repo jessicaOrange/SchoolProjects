@@ -1,0 +1,23 @@
+<!-- Modal -->
+<div id="travelModal" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h2 class="modal-title">Travlendar Travel Event</h2>
+      </div>
+      <div *ngIf="travelEventData.travelEventModel" class="modal-body">
+        <h4>Travel Mode: {{travelEventData.travelEventModel.travelMode}}</h4><br>
+        <h4>Travel Time Estimate: {{travelEventData.travelEventModel.travelTimeEstimate}}</h4><br>
+        <h4>Travel Start Time: {{travelEventData.travelEventModel.travelStartTime}}</h4><br>
+        <h4>Travel End Time: {{travelEventData.travelEventModel.travelEndTime}}</h4><br>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
