@@ -19,7 +19,7 @@
     "googleapis": "^22.2.0",
     "moment": "^2.21.0",
     "moment-timezone": "^0.5.14",
-    "mongoose": "^4.13.5",
+    "mongoose": "^4.13.21",
     "morgan": "~1.9.0",
     "pug": "2.0.0-beta11",
     "rrule": "^2.2.9",
